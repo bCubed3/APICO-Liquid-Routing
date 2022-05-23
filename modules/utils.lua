@@ -66,7 +66,7 @@ end
 function util_tank_drain(menu_id, source_id, speed)
     source_level = api_gp(source_id, "tank_amount")
     api_log("util", source_level)
-    if source_level < speed then
+    if source_level <= speed then
         api_sp(source_id, "tank_amount", 0)
         return source_level
     end
