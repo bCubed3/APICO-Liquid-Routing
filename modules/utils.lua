@@ -20,7 +20,7 @@ function util_define_extractor()
         info = {},
         tools = {"mouse1", "hammer1"},
         placeable = true
-    }, "sprites/pipe.png", "sprites/pipe_ui.png", {
+    }, "sprites/pipe_controller.png", "sprites/extractor_gui.png", {
         define = "pipe_define"
     })
 
