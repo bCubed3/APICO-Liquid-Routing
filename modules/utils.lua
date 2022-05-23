@@ -4,8 +4,8 @@ function util_define_all()
 end
 
 function util_define_extractor()
-    -- define the pipe object
-    local  define_pipe_obj = api_define_menu_object({
+    -- define the extractor object
+    local  define_obj = api_define_menu_object({
         id = "extractor",
         name = "Liquid Extractor",
         category = "Tools",
@@ -14,21 +14,28 @@ function util_define_extractor()
         shop_buy = 0,
         shop_sell = 0,
         layout = {
-        {19,29, "Fluid"}
+            {7, 43, "Liquid Input", {"canister1", "canister2"}},
+            {30, 43, "Liquid Output", {"canister1", "canister2"}},
+            --{7, 17, "LiquidX"},
+            --{30, 17, "Liquid"},
+            {7, 69},
+            {30, 69}
         },
-        buttons = {"Help", "Target", "Close"},
+        buttons = {"Help", "Move", "Target", "Close"},
         info = {},
         tools = {"mouse1", "hammer1"},
         placeable = true
     }, "sprites/pipe_controller.png", "sprites/extractor_gui.png", {
-        define = "pipe_define"
+        define = "extractor_define",
+        draw = "extractor_draw",
+        change = "extractor_change"
     })
 
     recipe = {
         { item = "planks1", amount = 2}
     }
     define_recipe = api_define_recipe("crafting", MOD_NAME .. "_extractor", recipe, 1)
-    if (define_pipe_obj == "Success" and define_recipe == "Success") then return "Success" end
+    if (define_obj == "Success" and define_recipe == "Success") then return "Success" end
     return nil
 end
 
