@@ -5,7 +5,7 @@ EXTRACTORS = {}
 function register()
   return {
     name = MOD_NAME,
-    hooks = {"draw"},
+    hooks = {"draw", "clock"},
     modules = {"utils", "extractor"}
   }
 end
@@ -24,4 +24,16 @@ function draw()
     oy = api_gp(extractor, "y") - cam["y"]
     api_draw_circle(ox+8, oy+8, 64, "OUTLINE", true)
   end
+end
+
+function clock()
+  api_log("mod", EXTRACTORS)
+  new_list = {}
+  for i=1,#EXTRACTORS do
+    if (api_inst_exists(EXTRACTORS[i]) == 1) then
+      extractor_process(EXTRACTORS[i])
+      table.insert(new_list, EXTRACTORS[i])
+    end
+  end
+  EXTRACTORS = new_list
 end
