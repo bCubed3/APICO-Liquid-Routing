@@ -1,4 +1,5 @@
 MOD_NAME = "liquid_routing"
+prev_level = 0
 
 EXTRACTORS = {}
 
@@ -6,7 +7,7 @@ function register()
   return {
     name = MOD_NAME,
     hooks = {"draw", "clock"},
-    modules = {"utils", "extractor"}
+    modules = {"utils", "extractor","entangled_canister"}
   }
 end
 
@@ -27,7 +28,6 @@ function draw()
 end
 
 function clock()
-  api_log("mod", EXTRACTORS)
   new_list = {}
   for i=1,#EXTRACTORS do
     if (api_inst_exists(EXTRACTORS[i]) == 1) then
@@ -36,4 +36,6 @@ function clock()
     end
   end
   EXTRACTORS = new_list
+
+  prev_level = entangled_canister_process(prev_level)
 end

@@ -17,11 +17,11 @@ end
 function extractor_change(menu_id)
     in_slot = api_get_slot(menu_id, 1)
     out_slot = api_get_slot(menu_id, 2)
-    if out_slot["item"] == "canister1" or out_slot["item"] == "canister2" then
+    if util_is_canister(out_slot["item"]) then
         api_slot_drain(menu_id, 2)
     end
 
-    if in_slot["item"] == "canister1" or in_slot["item"] == "canister2" then
+    if util_is_canister(in_slot["item"]) then
         api_sp(menu_id, "extract_filter", in_slot["stats"]["type"])
         if tank_amt == 0 then
             api_sp(menu_id, "tank_type", in_slot["stats"]["type"])

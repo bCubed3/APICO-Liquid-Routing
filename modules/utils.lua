@@ -14,8 +14,8 @@ function util_define_extractor()
         shop_buy = 0,
         shop_sell = 0,
         layout = {
-            {7, 43, "Liquid Input", {"canister1", "canister2"}},
-            {30, 43, "Liquid Output", {"canister1", "canister2"}},
+            {7, 43, "Liquid Input", {"canister1", "canister2", "liquid_routing_canister3"}},
+            {30, 43, "Liquid Output", {"canister1", "canister2", "liquid_routing_canister3"}},
             --{7, 17, "LiquidX"},
             --{30, 17, "Liquid"},
             {7, 69},
@@ -42,20 +42,20 @@ end
 function util_define_entangled_canister()
     -- define the extract pipe object
     local define_obj = api_define_item({
-        id = "entangled_canister",
+        id = "canister3",
         name = "Quantum Entangled Canister",
         category = "Tools",
-        tooltip = "Extracts fluid from a container into the pipe system",
+        tooltip = "Shares its liquid level with all other canisters",
         shop_key = false,
         shop_buy = 0,
         shop_sell = 0,
-        singular = false
-    }, "sprites/pipe.png")
+        singular = true
+    }, "sprites/quantum_canister.png")
 
     recipe = {
         { item = "planks1", amount = 1}
     }
-    define_recipe = api_define_recipe("tools", MOD_NAME .. "_entangled_canister", recipe, 2)
+    define_recipe = api_define_recipe("tools", MOD_NAME .. "_canister3", recipe, 2)
     if (define_obj == "Success" and define_recipe == "Success") then return "Success" end
     return nil
 end
@@ -65,11 +65,17 @@ end
 -- tank is the id of the tank in the source
 function util_tank_drain(menu_id, source_id, speed)
     source_level = api_gp(source_id, "tank_amount")
-    api_log("util", source_level)
     if source_level <= speed then
         api_sp(source_id, "tank_amount", 0)
         return source_level
     end
     api_sp(source_id, "tank_amount", source_level - speed)
     return speed
+end
+
+function util_is_canister(item_name)
+    if string.match(item_name, "canister") ~= nil then
+        return true
+    end
+    return false
 end
